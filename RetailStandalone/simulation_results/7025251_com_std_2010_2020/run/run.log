@@ -1,0 +1,7 @@
+[15:47:26.421766 WARN] [openstudio.EpwFile] Appears there are no design condition fields in the EPW file 'D:/moteur_calcul_pi4_database/CWEC_2020_QC/CAN_QC_MONTREAL-INTL-A_7025251_CWEC.epw'
+[15:47:26.425282 WARN] [openstudio.EpwFile] Successive data points (1999-Jan-31 to 2009-Feb-01, ending on line 753) are greater than 1 day apart in EPW file 'D:/moteur_calcul_pi4_database/CWEC_2020_QC/CAN_QC_MONTREAL-INTL-A_7025251_CWEC.epw'. Data will be treated as typical (TMY)
+[15:47:26.528864 WARN] [utilities.Polyhedron] Polyhedron is not enclosed in original testing. Trying to add missing colinear points.
+[15:47:26.532865 WARN] [utilities.Polyhedron] Polyhedron is not enclosed in original testing. Trying to add missing colinear points.
+[15:47:26.536847 WARN] [utilities.Polyhedron] Polyhedron is not enclosed in original testing. Trying to add missing colinear points.
+[15:47:26.601849 WARN] [utilities.idf.WorkspaceObject] Object of type 'Schedule:Constant' and named 'Always Off Discrete', points to an object named OnOff 1 from field 1, but that object cannot be located.
+[15:47:26.601849 WARN] [utilities.idf.WorkspaceObject] Object of type 'Schedule:Constant' and named 'Always On Continuous', points to an object named Fractional 1 from field 1, but that object cannot be located.
