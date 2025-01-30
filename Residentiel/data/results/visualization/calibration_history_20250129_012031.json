@@ -1,0 +1,24 @@
+{
+  "iterations": [
+    0,
+    1
+  ],
+  "scores": [
+    5.131025574204377,
+    5.131025574204377
+  ],
+  "parameters": {
+    "heating_setpoint": [
+      21,
+      20.5
+    ],
+    "cooling_setpoint": [
+      25,
+      25.5
+    ]
+  },
+  "convergence": [
+    false,
+    false
+  ]
+}

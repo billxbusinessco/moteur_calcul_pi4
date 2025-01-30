@@ -1,0 +1,49 @@
+{
+  "parameters": {
+    "heating_setpoint": {
+      "range": [
+        18,
+        22
+      ],
+      "initial": 21,
+      "step": 0.5,
+      "description": "Point de consigne chauffage (\u00b0C)"
+    },
+    "cooling_setpoint": {
+      "range": [
+        23,
+        27
+      ],
+      "initial": 25,
+      "step": 0.5,
+      "description": "Point de consigne climatisation (\u00b0C)"
+    }
+  },
+  "observations": [
+    {
+      "iteration": 0,
+      "parameters": {
+        "heating_setpoint": 21,
+        "cooling_setpoint": 25
+      },
+      "score": 5.131025574204377,
+      "timestamp": "2025-01-29T01:18:18.929401"
+    },
+    {
+      "iteration": 1,
+      "parameters": {
+        "heating_setpoint": 20.5,
+        "cooling_setpoint": 25.5
+      },
+      "score": 5.131025574204377,
+      "timestamp": "2025-01-29T01:20:30.673140"
+    }
+  ],
+  "best_score": 5.131025574204377,
+  "best_params": {
+    "heating_setpoint": 21,
+    "cooling_setpoint": 25
+  },
+  "convergence_count": 0,
+  "no_improvement_count": 1
+}

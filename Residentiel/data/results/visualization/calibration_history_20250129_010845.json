@@ -1,0 +1,24 @@
+{
+  "iterations": [
+    0,
+    1
+  ],
+  "scores": [
+    Infinity,
+    Infinity
+  ],
+  "parameters": {
+    "heating_setpoint": [
+      21,
+      18.20489443364114
+    ],
+    "cooling_setpoint": [
+      25,
+      26.554019632153082
+    ]
+  },
+  "convergence": [
+    false,
+    false
+  ]
+}

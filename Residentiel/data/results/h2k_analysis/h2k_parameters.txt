@@ -1,0 +1,345 @@
+Paramètres trouvés :
+--------------------------------------------------
+
+heating:
+  Path: HouseFile/ProgramInformation/Weather
+  Tag: Weather
+  Attributes: {'depthOfFrost': '1.2192', 'heatingDegreeDay': '4200', 'library': 'Wth110.dir'}
+
+  Path: HouseFile/ProgramInformation/Justifications
+  Tag: Justifications
+  Attributes: {'nameplateEfficiency': 'false', 'combustionTestEfficiency': 'false', 'heatingCorrection': 'false', 'achCorrection': 'false', 'twoBlowerDoors': 'false', 'over18Months': 'false'}
+
+  Path: HouseFile/ProgramInformation/Justifications/HeatingVolumeDecrease
+  Tag: HeatingVolumeDecrease
+  Attributes: {'selected': 'false'}
+
+  Path: HouseFile/House/Specifications/RoofCavity/GableEnds/SheatingMaterial
+  Tag: SheatingMaterial
+  Attributes: {'code': '5', 'value': '0.0826'}
+
+  Path: HouseFile/House/Specifications/RoofCavity/SlopedRoof/SheatingMaterial
+  Tag: SheatingMaterial
+  Attributes: {'code': '6', 'value': '0.1105'}
+
+  Path: HouseFile/House/Temperatures/MainFloors
+  Tag: MainFloors
+  Attributes: {'daytimeHeatingSetPoint': '21', 'nighttimeHeatingSetPoint': '18', 'nighttimeSetbackDuration': '8', 'coolingSetPoint': '25'}
+
+  Path: HouseFile/House/Temperatures/Basement
+  Tag: Basement
+  Attributes: {'heated': 'true', 'cooled': 'true', 'separateThermostat': 'false', 'heatingSetPoint': '19', 'basementUnit': 'false'}
+
+  Path: HouseFile/House/Temperatures/Equipment
+  Tag: Equipment
+  Attributes: {'heatingSetPoint': '22', 'coolingSetPoint': '24'}
+
+  Path: HouseFile/House/Temperatures/Crawlspace
+  Tag: Crawlspace
+  Attributes: {'heated': 'false', 'heatingSetPoint': '15'}
+
+  Path: HouseFile/House/HeatingCooling
+  Tag: HeatingCooling
+  Attributes: {'id': '17'}
+
+  Path: HouseFile/House/HeatingCooling/MultipleSystems/Summary
+  Tag: Summary
+  Attributes: {'energySaverHeatingSystems': '0', 'energySaverAirSourceHeatPump': '0', 'woodAppliances': '0', 'epaCsaHeatingSystems': '0'}
+
+  Path: HouseFile/House/HeatingCooling/SupplementaryHeatingSystems
+  Tag: SupplementaryHeatingSystems
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Electrical
+  Tag: Electrical
+  Attributes: {'baseload': '25.622644531', 'airConditioning': '5.892079102', 'appliance': '8.277837113', 'lighting': '3.416397142', 'heatPump': '0.000000000', 'spaceHeating': '0.448725584', 'spaceCooling': '6.619006033', 'ventilation': '0.079092223', 'total': '32.769448394'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/NaturalGas
+  Tag: NaturalGas
+  Attributes: {'baseload': '0.000000000', 'appliance': '0.000000000', 'hotWater': '20.726721931', 'spaceHeating': '32.160502936', 'total': '52.887220319'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Oil
+  Tag: Oil
+  Attributes: {'baseload': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Propane
+  Tag: Propane
+  Attributes: {'baseload': '0.000000000', 'appliance': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Wood
+  Tag: Wood
+  Attributes: {'baseload': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/SpaceHeating
+  Tag: SpaceHeating
+  Attributes: {'primary': '25.700230469', 'secondary': '6.460347168', 'total': '32.609298828'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/SupplementalHeating
+  Tag: SupplementalHeating
+  Attributes: {'system1': '6.460347168', 'system2': '0.000000000', 'system3': '0.000000000', 'system4': '0.000000000', 'system5': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Load
+  Tag: Load
+  Attributes: {'basementHeating': '0.000000000', 'basementCooling': '0.000000000', 'grossHeating': '53.903863281', 'auxiliaryEnergy': '23578.935546875'}
+
+  Path: HouseFile/AllResults/Results/Monthly/FractionOfTimeHeatingSystemNotOperating
+  Tag: FractionOfTimeHeatingSystemNotOperating
+  Attributes: {'january': '0.83478', 'february': '0.86616', 'march': '0.92424', 'april': '0.97898', 'may': '1.00000', 'june': '1.00000', 'july': '1.00000', 'august': '1.00000', 'september': '1.00000', 'october': '0.98901', 'november': '0.93487', 'december': '0.86689'}
+
+  Path: HouseFile/AllResults/Results/Monthly/ElectricalConsumption/ImsOrP9HeatingHours
+  Tag: ImsOrP9HeatingHours
+  Attributes: {'january': '0.00000', 'february': '0.00000', 'march': '0.00000', 'april': '0.00000', 'may': '0.00000', 'june': '0.00000', 'july': '0.00000', 'august': '0.00000', 'september': '0.00000', 'october': '0.00000', 'november': '0.00000', 'december': '0.00000'}
+
+  Path: HouseFile/AllResults/Results/Monthly/Load/Basement/Heating
+  Tag: Heating
+  Attributes: {'january': '1977.20603', 'february': '1445.70190', 'march': '905.72636', 'april': '243.31916', 'may': '0.00000', 'june': '0.00000', 'july': '0.00000', 'august': '0.00000', 'september': '0.00000', 'october': '131.44875', 'november': '753.74724', 'december': '1591.99231'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/Hrv
+  Tag: Hrv
+  Attributes: {'heatingHours': '0.041597942', 'neitherHours': '0.002066876', 'coolingHours': '0.035427475'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/Heating
+  Tag: Heating
+  Attributes: {'heatingHours': '0.448725922', 'neitherHours': '0.000000000', 'coolingHours': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/AirConditioning
+  Tag: AirConditioning
+  Attributes: {'heatingHours': '0.000000000', 'neitherHours': '0.000000000', 'coolingHours': '0.726932983'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/HrvOrExhaust
+  Tag: HrvOrExhaust
+  Attributes: {'heatingHours': '0.041597909', 'neitherHours': '0.002066874', 'coolingHours': '0.035427440', 'total': '0.079092223'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/SpaceHeating
+  Tag: SpaceHeating
+  Attributes: {'heatingHours': '0.448725584', 'neitherHours': '0.000000000', 'coolingHours': '0.000000000', 'total': '0.448725584'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/SpaceCooling
+  Tag: SpaceCooling
+  Attributes: {'heatingHours': '0.000000000', 'neitherHours': '0.000000000', 'coolingHours': '0.726932451', 'total': '0.726932451'}
+
+
+water:
+  Path: HouseFile/House/Specifications/WaterLevel
+  Tag: WaterLevel
+  Attributes: {'code': '2'}
+
+  Path: HouseFile/House/BaseLoads/Summary
+  Tag: Summary
+  Attributes: {'electricalAppliances': '6.2997', 'lighting': '2.6', 'otherElectric': '9.7', 'exteriorUse': '0.9', 'hotWaterLoad': '189.8137'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage
+  Tag: WaterUsage
+  Attributes: {'temperature': '55', 'otherHotWaterUse': '2.92', 'lowFlushToilets': '0'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage/ClothesWasher/RatedValues
+  Tag: RatedValues
+  Attributes: {'code': '1', 'ratedWaterConsumptionPerCycle': '54', 'ratedAnnualEnergyConsumption': '197'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage/DishWasher/RatedValues
+  Tag: RatedValues
+  Attributes: {'code': '1', 'ratedWaterConsumptionPerCycle': '19', 'ratedAnnualEnergyConsumption': '260'}
+
+  Path: HouseFile/House/Components/HotWater
+  Tag: HotWater
+  Attributes: {'id': '16'}
+
+  Path: HouseFile/House/Components/HotWater/Primary
+  Tag: Primary
+  Attributes: {'hasDrainWaterHeatRecovery': 'false', 'insulatingBlanket': '0', 'combinedFlue': 'false', 'flueDiameter': '76.2', 'energyStar': 'false', 'ecoEnergy': 'false', 'userDefinedPilot': 'false', 'connectedUnitsDwhr': '0', 'pilotEnergy': '0'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Electrical/HotWater
+  Tag: HotWater
+  Attributes: {'dhw': '0.000000000', 'primary': '0.000000000', 'secondary': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/NaturalGas
+  Tag: NaturalGas
+  Attributes: {'baseload': '0.000000000', 'appliance': '0.000000000', 'hotWater': '20.726721931', 'spaceHeating': '32.160502936', 'total': '52.887220319'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Oil
+  Tag: Oil
+  Attributes: {'baseload': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Propane
+  Tag: Propane
+  Attributes: {'baseload': '0.000000000', 'appliance': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Wood
+  Tag: Wood
+  Attributes: {'baseload': '0.000000000', 'hotWater': '0.000000000', 'spaceHeating': '0.000000000', 'total': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/HotWater
+  Tag: HotWater
+  Attributes: {'primary': '20.726767578', 'secondary': '0.000000000', 'total': '20.726767578'}
+
+  Path: HouseFile/AllResults/Results/Annual/HotWaterDemand
+  Tag: HotWaterDemand
+  Attributes: {'base': '13.552388672', 'primary': '20.726767578', 'secondary': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Monthly/SolarHotWaterEnergyContribution
+  Tag: SolarHotWaterEnergyContribution
+  Attributes: {'january': '0.00000', 'february': '0.00000', 'march': '0.00000', 'april': '0.00000', 'may': '0.00000', 'june': '0.00000', 'july': '0.00000', 'august': '0.00000', 'september': '0.00000', 'october': '0.00000', 'november': '0.00000', 'december': '0.00000'}
+
+
+ventilation:
+  Path: HouseFile/House/Specifications/RoofCavity
+  Tag: RoofCavity
+  Attributes: {'volume': '37.6413', 'ventilationRate': '0.5'}
+
+  Path: HouseFile/House/Ventilation
+  Tag: Ventilation
+  Attributes: {'id': '15'}
+
+  Path: HouseFile/House/Ventilation/Rooms/VentilationRate
+  Tag: VentilationRate
+  Attributes: {'code': '1'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Electrical
+  Tag: Electrical
+  Attributes: {'baseload': '25.622644531', 'airConditioning': '5.892079102', 'appliance': '8.277837113', 'lighting': '3.416397142', 'heatPump': '0.000000000', 'spaceHeating': '0.448725584', 'spaceCooling': '6.619006033', 'ventilation': '0.079092223', 'total': '32.769448394'}
+
+  Path: HouseFile/AllResults/Results/Annual/HeatLoss
+  Tag: HeatLoss
+  Attributes: {'total': '53.903860870', 'ceiling': '5.441777832', 'mainWalls': '9.569395508', 'windows': '14.520544189', 'doors': '0.866292664', 'exposedFloors': '0.455733551', 'crawlspace': '0.000000000', 'slab': '0.000000000', 'basementBelowGradeWall': '9.665573242', 'basementAboveGradeWall': '4.533874023', 'basementFloorHeaders': '0.606031921', 'ponyWall': '0.737954834', 'floorsAboveBasement': '3.735495605', 'airLeakageAndNaturalVentilation': '7.506683105'}
+
+  Path: HouseFile/AllResults/Results/Monthly/HeatLoss/Basement/AirLeakageAndMechanicalVentilation
+  Tag: AirLeakageAndMechanicalVentilation
+  Attributes: {'january': '1716.45421', 'february': '1346.06273', 'march': '1020.29834', 'april': '498.72641', 'may': '194.69374', 'june': '64.35229', 'july': '19.97317', 'august': '38.37549', 'september': '146.37495', 'october': '392.47899', 'november': '727.55822', 'december': '1341.33476'}
+
+  Path: HouseFile/AllResults/Results/Other/Ventilation
+  Tag: Ventilation
+  Attributes: {'roomCountCapacity': '60.000000000', 'noLimitCapacity': '60.000000000', 'minimumAirChangeRate': '0.688010037', 'equivalentLeakageArea': '0.038636847'}
+
+
+temperature:
+  Path: HouseFile/House/Temperatures
+  Tag: Temperatures
+  Attributes: {'id': '18'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage
+  Tag: WaterUsage
+  Attributes: {'temperature': '55', 'otherHotWaterUse': '2.92', 'lowFlushToilets': '0'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage/Shower/Temperature
+  Tag: Temperature
+  Attributes: {'code': '1', 'value': '41'}
+
+  Path: HouseFile/House/BaseLoads/WaterUsage/ClothesWasher/Temperature
+  Tag: Temperature
+  Attributes: {'code': '0'}
+
+  Path: HouseFile/House/NaturalAirInfiltration/AirLeakageTestData
+  Tag: AirLeakageTestData
+  Attributes: {'hasCgsbConditions': 'false', 'outsideTemperature': '4', 'barometricPressure': '101.3'}
+
+  Path: HouseFile/House/NaturalAirInfiltration/AirLeakageTestData/TestData/Test
+  Tag: Test
+  Attributes: {'rank': '1', 'equipment': '1', 'insideTemperature': '23.3333', 'zoneHeatedVolume': '313.9489'}
+
+  Path: HouseFile/House/Ventilation/WholeHouse
+  Tag: WholeHouse
+  Attributes: {'temperatureControlLower': '0', 'temperatureControlUpper': '16'}
+
+  Path: HouseFile/House/HeatingCooling/Type1/Furnace/Equipment
+  Tag: Equipment
+  Attributes: {'isBiEnergy': 'false', 'switchoverTemperature': '0'}
+
+  Path: HouseFile/AllResults/Results/Monthly/Temperatures
+  Tag: Temperatures
+
+
+cooling:
+  Path: HouseFile/House/Temperatures/MainFloors
+  Tag: MainFloors
+  Attributes: {'daytimeHeatingSetPoint': '21', 'nighttimeHeatingSetPoint': '18', 'nighttimeSetbackDuration': '8', 'coolingSetPoint': '25'}
+
+  Path: HouseFile/House/Temperatures/Equipment
+  Tag: Equipment
+  Attributes: {'heatingSetPoint': '22', 'coolingSetPoint': '24'}
+
+  Path: HouseFile/House/HeatingCooling
+  Tag: HeatingCooling
+  Attributes: {'id': '17'}
+
+  Path: HouseFile/House/HeatingCooling/CoolingSeason
+  Tag: CoolingSeason
+
+  Path: HouseFile/House/HeatingCooling/Type2
+  Tag: Type2
+  Attributes: {'shadingInF280Cooling': 'AccountedFor'}
+
+  Path: HouseFile/House/HeatingCooling/Type2/AirConditioning/CoolingParameters
+  Tag: CoolingParameters
+  Attributes: {'sensibleHeatRatio': '0.76', 'openableWindowArea': '0'}
+
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Electrical
+  Tag: Electrical
+  Attributes: {'baseload': '25.622644531', 'airConditioning': '5.892079102', 'appliance': '8.277837113', 'lighting': '3.416397142', 'heatPump': '0.000000000', 'spaceHeating': '0.448725584', 'spaceCooling': '6.619006033', 'ventilation': '0.079092223', 'total': '32.769448394'}
+
+  Path: HouseFile/AllResults/Results/Annual/Load
+  Tag: Load
+  Attributes: {'basementHeating': '0.000000000', 'basementCooling': '0.000000000', 'grossHeating': '53.903863281', 'auxiliaryEnergy': '23578.935546875'}
+
+  Path: HouseFile/AllResults/Results/Monthly/Load/Basement/Cooling
+  Tag: Cooling
+  Attributes: {'january': '0.00000', 'february': '0.00000', 'march': '0.00000', 'april': '0.00000', 'may': '0.02878', 'june': '7.46162', 'july': '44.62152', 'august': '30.22768', 'september': '2.58117', 'october': '0.00000', 'november': '0.00000', 'december': '0.00000'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/Hrv
+  Tag: Hrv
+  Attributes: {'heatingHours': '0.041597942', 'neitherHours': '0.002066876', 'coolingHours': '0.035427475'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/Heating
+  Tag: Heating
+  Attributes: {'heatingHours': '0.448725922', 'neitherHours': '0.000000000', 'coolingHours': '0.000000000'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/AirConditioning
+  Tag: AirConditioning
+  Attributes: {'heatingHours': '0.000000000', 'neitherHours': '0.000000000', 'coolingHours': '0.726932983'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/HrvOrExhaust
+  Tag: HrvOrExhaust
+  Attributes: {'heatingHours': '0.041597909', 'neitherHours': '0.002066874', 'coolingHours': '0.035427440', 'total': '0.079092223'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/SpaceHeating
+  Tag: SpaceHeating
+  Attributes: {'heatingHours': '0.448725584', 'neitherHours': '0.000000000', 'coolingHours': '0.000000000', 'total': '0.448725584'}
+
+  Path: HouseFile/AllResults/Results/Other/FanEnergyConsumption/SpaceCooling
+  Tag: SpaceCooling
+  Attributes: {'heatingHours': '0.000000000', 'neitherHours': '0.000000000', 'coolingHours': '0.726932451', 'total': '0.726932451'}
+
+
+setpoint:
+  Path: HouseFile/House/Temperatures/MainFloors
+  Tag: MainFloors
+  Attributes: {'daytimeHeatingSetPoint': '21', 'nighttimeHeatingSetPoint': '18', 'nighttimeSetbackDuration': '8', 'coolingSetPoint': '25'}
+
+  Path: HouseFile/House/Temperatures/Basement
+  Tag: Basement
+  Attributes: {'heated': 'true', 'cooled': 'true', 'separateThermostat': 'false', 'heatingSetPoint': '19', 'basementUnit': 'false'}
+
+  Path: HouseFile/House/Temperatures/Equipment
+  Tag: Equipment
+  Attributes: {'heatingSetPoint': '22', 'coolingSetPoint': '24'}
+
+  Path: HouseFile/House/Temperatures/Crawlspace
+  Tag: Crawlspace
+  Attributes: {'heated': 'false', 'heatingSetPoint': '15'}
+
+
+thermostat:
+  Path: HouseFile/House/Temperatures/Basement
+  Tag: Basement
+  Attributes: {'heated': 'true', 'cooled': 'true', 'separateThermostat': 'false', 'heatingSetPoint': '19', 'basementUnit': 'false'}
+
+
+infiltration:
+  Path: HouseFile/House/NaturalAirInfiltration
+  Tag: NaturalAirInfiltration
+  Attributes: {'id': '14'}
+
+
+dhw:
+  Path: HouseFile/AllResults/Results/Annual/Consumption/Electrical/HotWater
+  Tag: HotWater
+  Attributes: {'dhw': '0.000000000', 'primary': '0.000000000', 'secondary': '0.000000000'}
+
