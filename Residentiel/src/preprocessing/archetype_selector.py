@@ -69,15 +69,12 @@ class ArchetypeSelector:
             self.logger.error(f"Erreur lors du chargement : {str(e)}")
             return False
 
-    def select_archetypes(self, target_total: int = 200) -> bool:
+    def select_archetypes(self, n_per_zone: int = None) -> bool:
         """
         Sélectionne les archétypes selon la distribution du parc
         
         Args:
-            target_total: Nombre total d'archétypes à sélectionner
-            
-        Returns:
-            bool: True si la sélection est réussie
+            n_per_zone: Nombre d'archétypes par zone. Si None, utilise la distribution prédéfinie.
         """
         try:
             # Charger les données si nécessaire
@@ -85,14 +82,24 @@ class ArchetypeSelector:
                 if not self.load_data():
                     return False
 
-            # Distribution par zone prédéfinie
-            zone_targets = {
-                462.0: 7,    # Garder tous
-                448.0: 20,   
-                479.0: 30,   
-                477.0: 70,   
-                491.0: 70    
-            }
+            if n_per_zone is not None:
+                # Mode simplifié : n archétypes par zone
+                zone_targets = {
+                    462.0: n_per_zone,
+                    448.0: n_per_zone,
+                    479.0: n_per_zone,
+                    477.0: n_per_zone,
+                    491.0: n_per_zone
+                }
+            else:
+                # Distribution par défaut
+                zone_targets = {
+                    462.0: 7,    # Garder tous
+                    448.0: 20,   
+                    479.0: 30,   
+                    477.0: 70,   
+                    491.0: 70    
+                }
 
             selected_archetypes = []
             
@@ -136,18 +143,12 @@ class ArchetypeSelector:
 
 # Test direct
 if __name__ == "__main__":
+    # Pour 2 archétypes par zone (test rapide)
     selector = ArchetypeSelector()
-    
-    print("\nTest de chargement des archétypes sélectionnés :")
-    print("-" * 50)
-    
-    if selector.load_selected_archetypes():
-        print(f"\nNombre d'archétypes chargés : {len(selector.selected_archetypes)}")
-        print("\nDistribution par zone :")
-        zone_dist = selector.selected_archetypes['weather_zone'].value_counts()
-        for zone, count in zone_dist.items():
-            print(f"Zone {zone}: {count} archétypes")
-    else:
-        print("\nAucun archétype trouvé, lancement de la sélection...")
-        if selector.select_archetypes():
-            print("\nSélection réussie!")
+    selector.select_archetypes(n_per_zone=10)
+
+    # # Pour 10 archétypes par zone
+    # selector.select_archetypes(n_per_zone=10)
+
+    # # Pour utiliser la distribution par défaut
+    # selector.select_archetypes()

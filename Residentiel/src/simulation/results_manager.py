@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import json
 from datetime import datetime
+from typing import Optional
 
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
@@ -18,19 +19,21 @@ from config.paths_config import (
 )
 
 class ResultsManager:
+    """Gère le traitement des résultats de simulation OpenStudio"""
+    
     def __init__(self):
         self.logger = self._setup_logger()
-        self.results_dir = RESULTS_STRUCTURE['PROCESSED_DIR']  # Utiliser RESULTS_STRUCTURE
-        self.simulation_dir = RESULTS_STRUCTURE['SIMULATIONS_DIR']  
-        self.results_dir.mkdir(parents=True, exist_ok=True)
-
-        # Colonnes primaires (celles qu'on veut absolument)
-        self.primary_columns = {
-            'timestamp': 'Time',
+        
+        # Colonnes à extraire des résultats OpenStudio
+        self.column_mapping = {
             'total_electricity': 'Fuel Use: Electricity: Total',
             'heating': 'End Use: Electricity: Heating',
-            'cooling': 'End Use: Electricity: Cooling'
+            'cooling': 'End Use: Electricity: Cooling',
+            'dhw': 'End Use: Electricity: Hot Water'
         }
+        
+        # État du traitement
+        self.current_iteration = 0
 
     def _setup_logger(self):
         logging.basicConfig(
@@ -40,264 +43,159 @@ class ResultsManager:
         return logging.getLogger('ResultsManager')
 
     def process_iteration_results(self, iteration: int) -> bool:
-        """
-        Traite les résultats d'une itération complète
-        """
+        """Traite les résultats d'une itération complète"""
         try:
-            # 1. Localiser les résultats via chemins centralisés
+            self.current_iteration = iteration
             paths = get_iteration_dirs(iteration)
-            iteration_dir = RESULTS_STRUCTURE['SIMULATIONS_DIR'] / f'iteration_{iteration}'
-            output_dir = paths['iteration_dir']
             
-            if not iteration_dir.exists():
-                raise FileNotFoundError(f"Dossier d'itération non trouvé: {iteration_dir}")
-
-            # 2. Préparer dossier de sortie
-            output_dir.mkdir(parents=True, exist_ok=True)
-
-            # 3. Traiter chaque archétype
-            archetype_results = {}
+            # Créer les dossiers nécessaires
+            paths['processed_dir'].mkdir(parents=True, exist_ok=True)
+            
+            # Traiter chaque archétype
             processed = 0
             errors = 0
-
-            for arch_dir in iteration_dir.iterdir():
+            
+            for arch_dir in paths['simulation_dir'].iterdir():
                 if not arch_dir.is_dir() or arch_dir.name.startswith('_'):
                     continue
-
+                    
                 try:
-                    # Chercher résultats dans output/run/
-                    results_file = arch_dir / 'output' / arch_dir.name / 'run' / 'results_timeseries.csv'
+                    # Chercher résultats
+                    results_file = arch_dir / 'run' / 'results_timeseries.csv'
                     if not results_file.exists():
-                        raise FileNotFoundError(f"Résultats non trouvés: {results_file}")
+                        self.logger.warning(f"Fichier non trouvé : {results_file}")
+                        continue
 
                     # Traiter les données
                     processed_data = self._process_results_file(results_file)
                     if processed_data is not None:
                         # Sauvegarder résultats traités
-                        output_file = output_dir / f"{arch_dir.name}_processed.csv"
+                        output_file = paths['processed_dir'] / f"{arch_dir.name}_processed.csv"
                         processed_data.to_csv(output_file)
-                        archetype_results[arch_dir.name] = True
+                        # self.logger.info(f"Résultats sauvegardés : {output_file}")
                         processed += 1
-                    else:
-                        errors += 1
-
+                    
                 except Exception as e:
                     self.logger.error(f"Erreur traitement {arch_dir.name}: {str(e)}")
                     errors += 1
                     continue
 
-            # 4. Sauvegarder métadonnées
-            self._save_processing_metadata(iteration, {
-                'processed': processed,
-                'errors': errors,
-                'success_rate': (processed / (processed + errors)) * 100 if (processed + errors) > 0 else 0
-            })
-
-            self.logger.info(f"\nTraitement terminé:")
-            self.logger.info(f"- Archétypes traités: {processed}")
-            self.logger.info(f"- Erreurs: {errors}")
-
+            # Sauvegarder métadonnées
+            if processed > 0:
+                metadata = {
+                    'timestamp': datetime.now().isoformat(),
+                    'iteration': iteration,
+                    'processed': processed,
+                    'errors': errors,
+                    'success_rate': (processed / (processed + errors)) * 100 if (processed + errors) > 0 else 0,
+                    'columns_processed': list(self.column_mapping.keys())
+                }
+                
+                metadata_file = paths['processed_dir'] / 'processing_metadata.json'
+                with open(metadata_file, 'w') as f:
+                    json.dump(metadata, f, indent=2)
+                
+                self.logger.info(f"\nTraitement terminé:")
+                self.logger.info(f"- Archétypes traités: {processed}")
+                self.logger.info(f"- Erreurs: {errors}")
+                
             return processed > 0
 
         except Exception as e:
             self.logger.error(f"Erreur traitement itération {iteration}: {str(e)}")
             return False
 
-    # def _process_results_file(self, file_path: Path) -> pd.DataFrame:
-    #     try:
-    #         # 1. Lecture avec gestion explicite des types et options
-    #         df = pd.read_csv(file_path, low_memory=False)
-            
-    #         # 2. Nettoyer et extraire les vraies données numériques (après la ligne d'unités)
-    #         result_df = pd.DataFrame()
-            
-    #         # Traitement du temps
-    #         result_df['timestamp'] = pd.to_datetime(df['Time'].values[2:])
-    #         result_df.set_index('timestamp', inplace=True)
-            
-    #         # Colonnes d'énergie - assurer la conversion en float
-    #         energy_columns = {
-    #             'total_electricity': 'Fuel Use: Electricity: Total',
-    #             'heating': 'End Use: Electricity: Heating',
-    #             'cooling': 'End Use: Electricity: Cooling'
-    #         }
-            
-    #         for target, source in energy_columns.items():
-    #             # Extraction des valeurs numériques
-    #             values = df[source].values[2:]  # Ignorer les 2 premières lignes
-    #             numerical_values = []
-                
-    #             for val in values:
-    #                 try:
-    #                     # Nettoyer et convertir la valeur
-    #                     clean_val = str(val).strip().replace(',', '.')
-    #                     num_val = float(clean_val)
-    #                     numerical_values.append(num_val)
-    #                 except (ValueError, TypeError):
-    #                     numerical_values.append(0.0)  # ou np.nan si vous préférez
-                
-    #             result_df[target] = numerical_values
-                
-    #             # Validation et log
-    #             self.logger.info(f"\nStatistiques pour {target}:")
-    #             self.logger.info(f"- Nombre de valeurs: {len(numerical_values)}")
-    #             self.logger.info(f"- Min: {min(numerical_values):.3f}")
-    #             self.logger.info(f"- Max: {max(numerical_values):.3f}")
-    #             self.logger.info(f"- Moyenne: {sum(numerical_values)/len(numerical_values):.3f}")
-            
-    #         # 3. Validation finale du nombre d'heures
-    #         if len(result_df) != 8760:
-    #             self.logger.warning(f"Ajustement du nombre d'heures : {len(result_df)} -> 8760")
-    #             # Compléter ou tronquer pour avoir exactement 8760 heures
-    #             if len(result_df) > 8760:
-    #                 result_df = result_df[:8760]
-    #             else:
-    #                 # Ajouter les heures manquantes avec des valeurs interpolées
-    #                 last_time = result_df.index[-1]
-    #                 next_hour = last_time + pd.Timedelta(hours=1)
-    #                 while len(result_df) < 8760:
-    #                     result_df.loc[next_hour] = result_df.iloc[-1]
-    #                     next_hour += pd.Timedelta(hours=1)
-            
-    #         return result_df
-
-    #     except Exception as e:
-    #         self.logger.error(f"Erreur traitement fichier {file_path.name}: {str(e)}")
-    #         import traceback
-    #         self.logger.error(f"Traceback: {traceback.format_exc()}")
-    #         return None
-
-
-    def _process_results_file(self, file_path: Path) -> pd.DataFrame:
+    def _process_results_file(self, file_path: Path) -> Optional[pd.DataFrame]:
+        """Traite un fichier de résultats OpenStudio"""
         try:
-            # 1. Lecture avec gestion explicite des types et options
+            # 1. Lecture avec gestion explicite des types
             df = pd.read_csv(file_path, low_memory=False)
             
-            # 2. Nettoyer et extraire les vraies données numériques (après la ligne d'unités)
+            # 2. Nettoyer et extraire les données numériques (après la ligne d'unités)
             result_df = pd.DataFrame()
             
             # Traitement du temps
-            result_df['timestamp'] = pd.to_datetime(df['Time'].values[1:])  # Commencer à 1 au lieu de 2
-            result_df.set_index('timestamp', inplace=True)
+            result_df.index = pd.to_datetime(df['Time'].values[1:])
+            result_df.index.name = 'timestamp'
             
-            # Colonnes d'énergie - assurer la conversion en float
-            energy_columns = {
-                'total_electricity': 'Fuel Use: Electricity: Total',
-                'heating': 'End Use: Electricity: Heating',
-                'cooling': 'End Use: Electricity: Cooling'
-            }
+            # Traitement des colonnes d'énergie
+            for our_col, os_col in self.column_mapping.items():
+                if os_col in df.columns:
+                    # Extraction et nettoyage des valeurs
+                    values = df[os_col].values[1:]  # Ignorer ligne d'unités
+                    numerical_values = []
+                    
+                    for val in values:
+                        try:
+                            clean_val = str(val).strip().replace(',', '.')
+                            num_val = float(clean_val)
+                            numerical_values.append(num_val)
+                        except (ValueError, TypeError):
+                            numerical_values.append(0.0)
+                    
+                    result_df[our_col] = numerical_values
             
-            for target, source in energy_columns.items():
-                # Extraction des valeurs numériques
-                values = df[source].values[1:]  # Commencer à 1 au lieu de 2
-                numerical_values = []
-                
-                for val in values:
-                    try:
-                        # Nettoyer et convertir la valeur
-                        clean_val = str(val).strip().replace(',', '.')
-                        num_val = float(clean_val)
-                        numerical_values.append(num_val)
-                    except (ValueError, TypeError):
-                        numerical_values.append(0.0)  # ou np.nan si vous préférez
-                
-                result_df[target] = numerical_values
-                
-                # Validation et log
-                self.logger.info(f"\nStatistiques pour {target}:")
-                self.logger.info(f"- Nombre de valeurs: {len(numerical_values)}")
-                self.logger.info(f"- Min: {min(numerical_values):.3f}")
-                self.logger.info(f"- Max: {max(numerical_values):.3f}")
-                self.logger.info(f"- Moyenne: {sum(numerical_values)/len(numerical_values):.3f}")
-            
-            # 3. Validation finale du nombre d'heures
-            if len(result_df) != 8760:
-                self.logger.warning(f"Ajustement du nombre d'heures : {len(result_df)} -> 8760")
-                if len(result_df) > 8760:
-                    result_df = result_df[:8760]
                 else:
-                    # Ajouter les heures manquantes avec des valeurs interpolées
-                    last_time = result_df.index[-1]
-                    next_hour = last_time + pd.Timedelta(hours=1)
-                    while len(result_df) < 8760:
-                        result_df.loc[next_hour] = result_df.iloc[-1]
-                        next_hour += pd.Timedelta(hours=1)
+                    # self.logger.warning(f"Colonne manquante : {os_col}")
+                    result_df[our_col] = 0.0
+            
+            # 3. Validation du nombre d'heures
+            if len(result_df) != 8760:
+                self.logger.warning(f"Ajustement nombre d'heures : {len(result_df)} -> 8760")
+                result_df = self._adjust_hours(result_df)
             
             return result_df
-
+            
         except Exception as e:
             self.logger.error(f"Erreur traitement fichier {file_path.name}: {str(e)}")
             import traceback
             self.logger.error(f"Traceback: {traceback.format_exc()}")
             return None
+
+    def _log_column_statistics(self, values: list, column_name: str):
+        """Log des statistiques pour une colonne"""
+        self.logger.info(f"\nStatistiques pour {column_name}:")
+        self.logger.info(f"- Nombre de valeurs: {len(values)}")
+        self.logger.info(f"- Min: {min(values):.3f}")
+        self.logger.info(f"- Max: {max(values):.3f}")
+        self.logger.info(f"- Moyenne: {sum(values)/len(values):.3f}")
+
+    def _adjust_hours(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Ajuste le nombre d'heures à 8760"""
+        if len(df) > 8760:
+            return df[:8760]
         
-    
+        # Compléter avec interpolation
+        last_time = df.index[-1]
+        next_hour = last_time + pd.Timedelta(hours=1)
+        while len(df) < 8760:
+            df.loc[next_hour] = df.iloc[-1]
+            next_hour += pd.Timedelta(hours=1)
+        
+        return df
 
-    def _save_processing_metadata(self, iteration: int, metrics: dict):
-        """
-        Sauvegarde les métadonnées du traitement
-        """
-        metadata = {
-            'iteration': iteration,
-            'timestamp': datetime.now().isoformat(),
-            'metrics': metrics,
-            'processing_info': {
-                'columns_processed': list(self.primary_columns.keys()),
-                'target_hours': 8760,
-            }
-        }
+    def get_iteration_results(self, iteration: int) -> Optional[pd.DataFrame]:
+        """Récupère les résultats d'une itération"""
+        try:
+            paths = get_iteration_dirs(iteration)
+            
+            # Chercher les fichiers de résultats
+            result_files = list(paths['processed_dir'].glob('*_processed.csv'))
+            if not result_files:
+                raise FileNotFoundError(f"Aucun résultat trouvé dans {paths['processed_dir']}")
+            
+            # Mode test (un seul archétype)
+            if len(result_files) == 1:
+                return pd.read_csv(result_files[0], index_col='timestamp', parse_dates=['timestamp'])
+            
+            # Combiner tous les résultats
+            dfs = []
+            for result_file in result_files:
+                df = pd.read_csv(result_file, index_col='timestamp', parse_dates=['timestamp'])
+                dfs.append(df)
+            
+            return pd.concat(dfs).groupby(level=0).sum()
 
-        metadata_file = self.results_dir / f'iteration_{iteration}' / 'processing_metadata.json'
-        with open(metadata_file, 'w') as f:
-            json.dump(metadata, f, indent=2)
-
-if __name__ == "__main__":
-    manager = ResultsManager()
-    
-    print("\nTest du ResultsManager :")
-    print("-" * 50)
-    
-    # Test avec un seul fichier
-    iteration_dir = manager.simulation_dir / 'iteration_0'
-    if iteration_dir.exists():
-        print(f"\nRecherche dans : {iteration_dir}")
-        # Trouver le premier fichier de résultats
-        for arch_dir in iteration_dir.iterdir():
-            if arch_dir.is_dir():
-                results_path = arch_dir / 'output' / arch_dir.name / 'run' / 'results_timeseries.csv'
-                print(f"\nVérification : {results_path}")
-                
-                if results_path.exists():
-                    print(f"\nTraitement du fichier : {results_path}")
-                    
-                    # Traiter le fichier
-                    processed_df = manager._process_results_file(results_path)
-                    
-                    if processed_df is not None:
-                        print("\nVérification des données traitées :")
-                        print(f"Nombre de lignes : {len(processed_df)}")
-                        print("\nPremières lignes :")
-                        print(processed_df.head())
-                        print("\nDernières lignes :")
-                        print(processed_df.tail())
-                        
-                        print("\nStatistiques détaillées :")
-                        print(processed_df.describe())
-                        
-                        # Sauvegarder le résultat
-                        output_dir = manager.results_dir / 'iteration_0'
-                        output_dir.mkdir(exist_ok=True, parents=True)
-                        output_file = output_dir / f"{arch_dir.name}_processed.csv"
-                        processed_df.to_csv(output_file)
-                        print(f"\nRésultat sauvegardé dans : {output_file}")
-                        
-                        # Vérifier le fichier sauvegardé
-                        print("\nVérification du fichier sauvegardé :")
-                        saved_df = pd.read_csv(output_file)
-                        print(f"Nombre de lignes dans le fichier : {len(saved_df)}")
-                        print("Premières lignes du fichier sauvegardé :")
-                        print(saved_df.head())
-                        break
-    else:
-        print(f"\nDossier non trouvé : {iteration_dir}")
-        print("Assurez-vous d'avoir lancé au moins une simulation.")
+        except Exception as e:
+            self.logger.error(f"Erreur lecture résultats : {str(e)}")
+            return None
